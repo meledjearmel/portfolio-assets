@@ -120,7 +120,15 @@ async function build() {
   tx(s, "PRÉSENTATION DU LOGICIEL", { x: 1.0, y: 1.45, w: 6, h: 0.32, fontSize: 12, bold: true, color: C.accent2, charSpacing: 3, margin: 0, valign: "middle" });
   s.addText("Division Terrestre Internationale", { placeholder: "title" });
   tx(s, "Gestion de la flotte, des chauffeurs, des trajets et des finances", Object.assign({ x: 0.8, y: 4.05, w: 7.2, h: 0.9, fontSize: 20, color: C.accent2 }, A(2)));
-  tx(s, [{ text: "Présentation : [à compléter]", options: { breakLine: true } }, { text: "Date : [à compléter]" }], Object.assign({ x: 0.8, y: 5.6, w: 6, h: 0.9, fontSize: 14, color: C.background1 }, A(3)));
+  // Présentateur et date
+  iconTile(s, "FaUserTie", 0.8, 5.4, 0.7, C.accent1, HEX.white, 3);
+  tx(s, [{ text: "PRÉSENTÉ PAR", options: { fontSize: 10, bold: true, color: C.accent2, charSpacing: 2, breakLine: true } },
+    { text: "Armel Meledje", options: { fontSize: 19, bold: true, color: C.background1, breakLine: true } },
+    { text: "Développeur Senior – Ingénieur de conception", options: { fontSize: 13, color: C.accent2 } }], Object.assign({ x: 1.7, y: 5.3, w: 4.6, h: 1.1, margin: 0, valign: "middle" }, A(3)));
+  s.addShape(pres.shapes.LINE, Object.assign({ x: 6.15, y: 5.4, w: 0, h: 0.9, line: { color: HEX.sky, width: 1, transparency: 50 } }, A(4)));
+  iconTile(s, "FaCalendarDays", 6.4, 5.4, 0.7, C.accent1, HEX.white, 4);
+  tx(s, [{ text: "DATE", options: { fontSize: 10, bold: true, color: C.accent2, charSpacing: 2, breakLine: true } },
+    { text: "Vendredi 30 octobre 2026", options: { fontSize: 17, bold: true, color: C.background1 } }], Object.assign({ x: 7.3, y: 5.3, w: 3.0, h: 1.1, margin: 0, valign: "middle" }, A(4)));
   s.addNotes("Accueillir les participants (agents et direction). Annoncer le déroulé : présentation du logiciel (ce qu'il sait faire, ses modules, comment et pourquoi l'utiliser), puis démonstration en direct d'un petit circuit de travail, puis questions.");
 
   // 2 — Pourquoi
@@ -376,7 +384,7 @@ async function animate() {
   await loadIcons([
     ...["FaTruckFast", "FaLightbulb", "FaLayerGroup", "FaBell", "FaChartLine", "FaSitemap", "FaGaugeHigh", "FaTruck", "FaUsers", "FaRoute", "FaWrench", "FaCoins",
       "FaUserTie", "FaMapLocationDot", "FaChartPie", "FaUserShield", "FaGear", "FaStar", "FaPlay", "FaComments", "FaFileInvoiceDollar", "FaUserPlus", "FaGasPump",
-      "FaReceipt", "FaArrowTrendUp", "FaArrowTrendDown", "FaBullseye", "FaPhone", "FaWrench"].map(n => [n, HEX.white]),
+      "FaReceipt", "FaArrowTrendUp", "FaArrowTrendDown", "FaBullseye", "FaPhone", "FaWrench", "FaCalendarDays"].map(n => [n, HEX.white]),
     ...["FaLayerGroup", "FaBell", "FaChartLine", "FaGaugeHigh", "FaTruck", "FaUsers", "FaRoute", "FaWrench", "FaCoins", "FaHashtag", "FaTruckFront", "FaCalendarDays",
       "FaIdCard", "FaCalendarXmark", "FaTag", "FaAddressCard", "FaIdBadge", "FaHandshake", "FaFileContract", "FaLocationCrosshairs", "FaClockRotateLeft", "FaDrawPolygon",
       "FaBullhorn", "FaClipboardList", "FaSignal", "FaTicket", "FaScrewdriverWrench", "FaUserGear", "FaBoxesStacked", "FaFillDrip", "FaArrowRightArrowLeft", "FaOilCan",
