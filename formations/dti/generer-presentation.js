@@ -92,14 +92,14 @@ async function build() {
       Object.assign({ x: x + 0.98, y: y + 0.14, w: w - 1.15, h: h - 0.28 }, A(step)));
   }
   // Diapositive « module »
-  function module(title, sec, icon, menu, intro, feats, benefit, notes) {
+  function module(title, sec, icon, menu, intro, feats, benefit, notes, panelTitle) {
     const s = content(title, sec, icon);
     tx(s, [{ text: "Menu  ", options: { bold: true, color: C.accent1 } }, { text: menu, options: { color: C.accent5 } }], { x: 0.6, y: 1.5, w: 8.4, h: 0.32, fontSize: 12, valign: "middle", margin: 0 });
     tx(s, intro, { x: 0.6, y: 1.88, w: 8.4, h: 0.5, fontSize: 17, color: C.text2, margin: 0 });
     feats.forEach((f, i) => card(s, 0.6 + (i % 2) * 4.3, 2.6 + Math.floor(i / 2) * 2.05, 4.1, 1.85, f[0], f[1], f[2], i + 1));
     const st = feats.length + 1;
     panel(s, 9.35, 1.5, 3.4, 5.2, C.text2, st, true);
-    tx(s, "Ce que ça apporte", Object.assign({ x: 9.6, y: 1.7, w: 3.0, h: 0.5, fontSize: 18, bold: true, color: C.accent2, margin: 0 }, A(st)));
+    tx(s, panelTitle || "Ce que ça apporte", Object.assign({ x: 9.6, y: 1.7, w: 3.0, h: 0.5, fontSize: 18, bold: true, color: C.accent2, margin: 0 }, A(st)));
     benefit.forEach((b, i) => { const y = 2.45 + i * 1.3;
       s.addImage(Object.assign({ data: ic("FaCircleCheck", HEX.sky), x: 9.6, y: y + 0.04, w: 0.32, h: 0.32 }, A(st + 1 + i)));
       tx(s, b, Object.assign({ x: 10.05, y, w: 2.55, h: 1.15, fontSize: 14, color: C.background1, margin: 0 }, A(st + 1 + i))); });
@@ -262,6 +262,46 @@ async function build() {
     "Les paramètres sont réservés à l'administrateur. Mentionner aussi la configuration de la carte (MAP API) et du GPS (Traccar Config).");
 
 
+
+  // Sécurité, confidentialité et qualité des données
+  pres.addSection({ title: "Sécurité et données" });
+  s = pres.addSlide({ masterName: "IMPACT", sectionTitle: "Sécurité et données" });
+  s.addText("Des données protégées, confidentielles et fiables", { placeholder: "title" });
+  tx(s, "Un logiciel de gestion ne vaut que par la confiance qu'on peut accorder à ses données.", Object.assign({ x: 0.8, y: 1.65, w: 11.5, h: 0.5, fontSize: 18, color: C.accent2 }, A(1)));
+  [["FaShieldHalved", "Sécurité", "Protéger l'accès au logiciel, les données et l'activité sur la route."],
+   ["FaUserSecret", "Confidentialité", "Chacun ne voit que ce dont il a besoin pour travailler."],
+   ["FaClipboardCheck", "Qualité des données", "Des informations complètes, justes et à jour pour bien décider."]]
+    .forEach((d, i) => { const x = 0.8 + i * 3.95, st = i + 2;
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, Object.assign({ x, y: 2.55, w: 3.65, h: 3.6, rectRadius: 0.15, fill: { color: "28356B" }, line: { color: "4A5C9A", width: 1 } }, A(st)));
+      s.addShape(pres.shapes.OVAL, Object.assign({ x: x + 1.27, y: 2.85, w: 1.1, h: 1.1, fill: { color: C.background1 }, line: { color: "3A4A82", width: 4 } }, A(st)));
+      s.addImage(Object.assign({ data: ic(d[0], HEX.navy), x: x + 1.55, y: 3.13, w: 0.54, h: 0.54 }, A(st)));
+      tx(s, [{ text: d[1], options: { bold: true, fontSize: 21, color: C.background1, breakLine: true, paraSpaceAfter: 6 } }, { text: d[2], options: { fontSize: 15, color: C.accent2 } }], Object.assign({ x: x + 0.25, y: 4.15, w: 3.15, h: 1.8, align: "center" }, A(st))); });
+  s.addNotes("Introduire la partie sécurité et données : c'est souvent la première question de la direction. Trois piliers : sécurité, confidentialité, qualité. Pour chacun, on distingue ce que le logiciel apporte et les bons réflexes attendus de chaque utilisateur.");
+
+  module("Sécurité : protéger l'accès et l'activité", "Sécurité et données", "FaShieldHalved", "Employee · Change Password · Setting's › DB Backup",
+    "Le logiciel protège l'accès ; la sécurité routière y gagne aussi.",
+    [["FaKey", "Accès protégé", "Identifiant et mot de passe personnels, changement de mot de passe, comptes désactivables."], ["FaLock", "Connexion sécurisée", "Application accessible en ligne via une adresse HTTPS."],
+     ["FaDatabase", "Sauvegardes", "Sauvegarde de la base de données en un clic, à faire régulièrement."], ["FaRoad", "Sécurité routière", "Permis et assurances expirés signalés, rappels d'entretien des véhicules."]],
+    ["Mot de passe personnel et robuste, changé régulièrement", "Ne jamais partager son compte", "Se déconnecter sur un poste partagé"],
+    "Distinguer la cybersécurité (accès, mots de passe, sauvegardes) et la sécurité de l'activité (véhicules entretenus, chauffeurs en règle). Ne pas promettre de garanties techniques au-delà de ce qui est vérifié : préciser que la politique de sauvegarde (fréquence, lieu de conservation) sera définie avec l'organisation.",
+    "Bons réflexes");
+
+  module("Confidentialité : chacun voit ce qu'il doit voir", "Sécurité et données", "FaUserSecret", "Employee › Add Employee (User Permission's)",
+    "Les données des chauffeurs, des clients, des employés et les finances sont sensibles.",
+    [["FaUserLock", "Droits par profil", "Permissions module par module : voir, ajouter, modifier, supprimer."], ["FaAddressBook", "Données personnelles", "Contacts, adresses, permis, documents : accès limité aux personnes concernées."],
+     ["FaFingerprint", "Traçabilité", "Auteur de chaque transaction et dernière connexion de chaque utilisateur."], ["FaFileExport", "Exports maîtrisés", "Exports Excel, CSV et PDF à réserver aux profils qui en ont besoin."]],
+    ["Donner à chacun le minimum de droits nécessaires", "Ne pas diffuser d'export sans besoin", "Désactiver le compte d'une personne qui part"],
+    "Insister sur le principe du moindre droit : les finances et les données personnelles ne doivent être visibles que par les profils concernés. Les profils seront définis avec la direction avant la mise en service.",
+    "Bons réflexes");
+
+  module("Qualité des données : des chiffres fiables", "Sécurité et données", "FaClipboardCheck", "Tous les formulaires et toutes les listes",
+    "Des rapports justes commencent par une saisie juste.",
+    [["FaAsterisk", "Champs obligatoires", "Les informations essentielles (*) doivent être remplies pour enregistrer."], ["FaListUl", "Listes de choix", "Véhicule, chauffeur, client, catégorie sélectionnés dans des listes : moins d'erreurs de frappe."],
+     ["FaCalculator", "Calculs automatiques", "Kilométrage estimé, montant total, totaux des transactions."], ["FaFileCsv", "Import encadré", "Modèle CSV à télécharger pour importer véhicules et chauffeurs."]],
+    ["Saisir au fil de l'eau, pas en fin de mois", "Vérifier avant de valider et éviter les doublons", "Supprimer les données de test"],
+    "Rappeler que le tableau de bord et les rapports ne valent que par la qualité de la saisie. Exemple concret : une catégorie créée deux fois (comme « Trip Income ») disperse les chiffres. Nommer un référent par service pour contrôler la qualité des données.",
+    "Bons réflexes");
+
   // Chiffres clés
   pres.addSection({ title: "Conclusion" });
   s = pres.addSlide({ masterName: "IMPACT", sectionTitle: "Conclusion" });
@@ -328,7 +368,7 @@ async function build() {
   s.addShape(pres.shapes.DOWN_ARROW, Object.assign({ x: 9.5, y: 4.2, w: 0.45, h: 0.45, fill: { color: C.accent1 }, line: { color: C.accent1 } }, A(4)));
   panel(s, 6.7, 4.75, 6.05, 1.75, C.background1, 4, true);
   tx(s, [{ text: "À partir du 4ᵉ mois : 100 000 FCFA", options: { bold: true, fontSize: 20, color: C.text2, breakLine: true } }, { text: "réglés chaque mois", options: { fontSize: 15, color: C.accent5 } }], Object.assign({ x: 6.95, y: 4.85, w: 5.6, h: 1.55, valign: "middle" }, A(4)));
-  s.addNotes("DIAPOSITIVE MASQUÉE : elle ne s'affiche pas pendant le diaporama. Pour l'afficher si la direction pose la question, taper 20 puis Entrée pendant le diaporama. Ne présenter que ces montants, sans autres frais.");
+  s.addNotes("DIAPOSITIVE MASQUÉE : elle ne s'affiche pas pendant le diaporama. Pour l'afficher si la direction pose la question, taper 24 puis Entrée pendant le diaporama. Ne présenter que ces montants, sans autres frais.");
 
   await pres.writeFile({ fileName: OUT });
 }
@@ -384,14 +424,15 @@ async function animate() {
   await loadIcons([
     ...["FaTruckFast", "FaLightbulb", "FaLayerGroup", "FaBell", "FaChartLine", "FaSitemap", "FaGaugeHigh", "FaTruck", "FaUsers", "FaRoute", "FaWrench", "FaCoins",
       "FaUserTie", "FaMapLocationDot", "FaChartPie", "FaUserShield", "FaGear", "FaStar", "FaPlay", "FaComments", "FaFileInvoiceDollar", "FaUserPlus", "FaGasPump",
-      "FaReceipt", "FaArrowTrendUp", "FaArrowTrendDown", "FaBullseye", "FaPhone", "FaWrench", "FaCalendarDays"].map(n => [n, HEX.white]),
+      "FaReceipt", "FaArrowTrendUp", "FaArrowTrendDown", "FaBullseye", "FaPhone", "FaWrench", "FaCalendarDays", "FaShieldHalved", "FaUserSecret", "FaClipboardCheck"].map(n => [n, HEX.white]),
+    ...["FaKey", "FaLock", "FaRoad", "FaUserLock", "FaAddressBook", "FaFingerprint", "FaFileExport", "FaAsterisk", "FaListUl", "FaCalculator", "FaFileCsv"].map(n => [n, HEX.blue]),
     ...["FaLayerGroup", "FaBell", "FaChartLine", "FaGaugeHigh", "FaTruck", "FaUsers", "FaRoute", "FaWrench", "FaCoins", "FaHashtag", "FaTruckFront", "FaCalendarDays",
       "FaIdCard", "FaCalendarXmark", "FaTag", "FaAddressCard", "FaIdBadge", "FaHandshake", "FaFileContract", "FaLocationCrosshairs", "FaClockRotateLeft", "FaDrawPolygon",
       "FaBullhorn", "FaClipboardList", "FaSignal", "FaTicket", "FaScrewdriverWrench", "FaUserGear", "FaBoxesStacked", "FaFillDrip", "FaArrowRightArrowLeft", "FaOilCan",
       "FaStore", "FaBuildingColumns", "FaReceipt", "FaMoneyBillTransfer", "FaTags", "FaScaleBalanced", "FaGasPump", "FaUserTie", "FaListCheck", "FaCubes", "FaToggleOn",
       "FaBuilding", "FaEnvelope", "FaFileInvoice", "FaDatabase", "FaServer", "FaHeadset", "FaUserPlus", "FaCircleCheck"].map(n => [n, HEX.blue]),
     ...["FaShuffle", "FaHourglassHalf", "FaCircleQuestion", "FaTruckFast"].map(n => [n, HEX.grey]),
-    ["FaCircleCheck", HEX.sky], ...["FaTruckFast", "FaPhone", "FaGasPump", "FaWrench", "FaCoins", "FaChartLine"].map(n => [n, HEX.navy]),
+    ["FaCircleCheck", HEX.sky], ...["FaTruckFast", "FaPhone", "FaGasPump", "FaWrench", "FaCoins", "FaChartLine", "FaShieldHalved", "FaUserSecret", "FaClipboardCheck"].map(n => [n, HEX.navy]),
   ]);
   await build();
   await applyTheme(OUT, THEME);
