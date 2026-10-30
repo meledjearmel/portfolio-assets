@@ -207,4 +207,20 @@ s.addText("Questions et échanges", { placeholder: "title" });
 tx(s, "Merci de votre attention", { x: 0.8, y: 3.8, w: 11.7, h: 0.6, fontSize: 20, color: C.accent4 });
 s.addNotes("Recueillir les questions et les besoins : modules prioritaires, profils de droits à créer, données à importer (véhicules, chauffeurs), formation des agents.");
 
+// 18 — Réserve : coûts (diapositive masquée, à afficher seulement sur demande de la direction)
+pres.addSection({ title: "Réserve" });
+s = content("Coûts de fonctionnement", "Réserve");
+s.hidden = true;
+card(s, 0.6, 1.5, 5.6, 2.3, "Hébergement du serveur", "");
+tx(s, [{ text: "100 000 FCFA", options: { bold: true, fontSize: 32, color: C.accent1, breakLine: true } }, { text: "par an", options: { fontSize: 16 } }], { x: 0.8, y: 2.25, w: 5.2, h: 1.4 });
+card(s, 0.6, 4.1, 5.6, 2.3, "Maintenance", "");
+tx(s, [{ text: "100 000 FCFA", options: { bold: true, fontSize: 32, color: C.accent1, breakLine: true } }, { text: "par mois, formation des agents comprise", options: { fontSize: 16 } }], { x: 0.8, y: 4.85, w: 5.2, h: 1.4 });
+tx(s, "Calendrier de paiement de la maintenance", { x: 6.7, y: 1.5, w: 6, h: 0.45, bold: true, fontSize: 17, color: C.text2 });
+s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.7, y: 2.15, w: 6.05, h: 1.9, rectRadius: 0.08, fill: { color: C.text2 }, line: { color: C.text2 } });
+tx(s, [{ text: "Premier paiement : 300 000 FCFA", options: { bold: true, fontSize: 20, color: C.accent4, breakLine: true } }, { text: "1er mois de maintenance + 2 mois payés d'avance (mois 2 et 3)", options: { fontSize: 15 } }], { x: 6.9, y: 2.25, w: 5.7, h: 1.7, color: C.background1, valign: "middle" });
+s.addShape(pres.shapes.DOWN_ARROW, { x: 9.5, y: 4.15, w: 0.45, h: 0.45, fill: { color: C.accent5 }, line: { color: C.accent5 } });
+s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.7, y: 4.7, w: 6.05, h: 1.7, rectRadius: 0.08, fill: { color: C.background2 }, line: { color: C.background2 } });
+tx(s, [{ text: "À partir du 4ᵉ mois : 100 000 FCFA", options: { bold: true, fontSize: 20, color: C.text2, breakLine: true } }, { text: "réglés chaque mois", options: { fontSize: 15 } }], { x: 6.9, y: 4.8, w: 5.7, h: 1.5, valign: "middle" });
+s.addNotes("DIAPOSITIVE MASQUÉE : elle ne s'affiche pas pendant le diaporama. À montrer uniquement si la direction pose la question (clic droit > Afficher la diapositive, ou la sélectionner depuis le mode présentateur). Ne présenter que ces montants, sans autres frais.");
+
 (async () => { await pres.writeFile({ fileName: OUT }); await applyTheme(OUT, THEME); console.log("ok"); })();
