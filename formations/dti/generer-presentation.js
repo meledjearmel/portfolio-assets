@@ -263,44 +263,78 @@ async function build() {
 
 
 
-  // Sécurité, confidentialité et qualité des données
-  pres.addSection({ title: "Sécurité et données" });
-  s = pres.addSlide({ masterName: "IMPACT", sectionTitle: "Sécurité et données" });
-  s.addText("Des données protégées, confidentielles et fiables", { placeholder: "title" });
-  tx(s, "Un logiciel de gestion ne vaut que par la confiance qu'on peut accorder à ses données.", Object.assign({ x: 0.8, y: 1.65, w: 11.5, h: 0.5, fontSize: 18, color: C.accent2 }, A(1)));
-  [["FaShieldHalved", "Sécurité", "Protéger l'accès au logiciel, les données et l'activité sur la route."],
-   ["FaUserSecret", "Confidentialité", "Chacun ne voit que ce dont il a besoin pour travailler."],
-   ["FaClipboardCheck", "Qualité des données", "Des informations complètes, justes et à jour pour bien décider."]]
+  // Sensibilisation : sécurité, confidentialité et qualité des données
+  pres.addSection({ title: "Bonnes pratiques" });
+  s = pres.addSlide({ masterName: "IMPACT", sectionTitle: "Bonnes pratiques" });
+  s.addText("Bien utiliser le logiciel : les bons réflexes", { placeholder: "title" });
+  tx(s, "Le logiciel protège l'accès et les données, mais la sécurité dépend surtout de chacun de nous.", Object.assign({ x: 0.8, y: 1.65, w: 11.5, h: 0.5, fontSize: 18, color: C.accent2 }, A(1)));
+  [["FaShieldHalved", "Sécurité", "Protéger son compte et l'accès au logiciel."],
+   ["FaUserSecret", "Confidentialité", "Protéger les informations des clients, des chauffeurs et de l'entreprise."],
+   ["FaClipboardCheck", "Qualité des données", "Saisir juste, complet et à temps pour des chiffres fiables."]]
     .forEach((d, i) => { const x = 0.8 + i * 3.95, st = i + 2;
       s.addShape(pres.shapes.ROUNDED_RECTANGLE, Object.assign({ x, y: 2.55, w: 3.65, h: 3.6, rectRadius: 0.15, fill: { color: "28356B" }, line: { color: "4A5C9A", width: 1 } }, A(st)));
       s.addShape(pres.shapes.OVAL, Object.assign({ x: x + 1.27, y: 2.85, w: 1.1, h: 1.1, fill: { color: C.background1 }, line: { color: "3A4A82", width: 4 } }, A(st)));
       s.addImage(Object.assign({ data: ic(d[0], HEX.navy), x: x + 1.55, y: 3.13, w: 0.54, h: 0.54 }, A(st)));
       tx(s, [{ text: d[1], options: { bold: true, fontSize: 21, color: C.background1, breakLine: true, paraSpaceAfter: 6 } }, { text: d[2], options: { fontSize: 15, color: C.accent2 } }], Object.assign({ x: x + 0.25, y: 4.15, w: 3.15, h: 1.8, align: "center" }, A(st))); });
-  s.addNotes("Introduire la partie sécurité et données : c'est souvent la première question de la direction. Trois piliers : sécurité, confidentialité, qualité. Pour chacun, on distingue ce que le logiciel apporte et les bons réflexes attendus de chaque utilisateur.");
+  s.addNotes("Passer de la découverte à l'usage au quotidien. Message clé : le logiciel est déjà en place et protège l'accès, mais la plupart des incidents viennent de gestes simples (mot de passe partagé, export envoyé au mauvais endroit, saisie oubliée). Chaque participant repart avec quelques réflexes concrets.");
 
-  module("Sécurité : protéger l'accès et l'activité", "Sécurité et données", "FaShieldHalved", "Employee · Change Password · Setting's › DB Backup",
-    "Le logiciel protège l'accès ; la sécurité routière y gagne aussi.",
-    [["FaKey", "Accès protégé", "Identifiant et mot de passe personnels, changement de mot de passe, comptes désactivables."], ["FaLock", "Connexion sécurisée", "Application accessible en ligne via une adresse HTTPS."],
-     ["FaDatabase", "Sauvegardes", "Sauvegarde de la base de données en un clic, à faire régulièrement."], ["FaRoad", "Sécurité routière", "Permis et assurances expirés signalés, rappels d'entretien des véhicules."]],
-    ["Mot de passe personnel et robuste, changé régulièrement", "Ne jamais partager son compte", "Se déconnecter sur un poste partagé"],
-    "Distinguer la cybersécurité (accès, mots de passe, sauvegardes) et la sécurité de l'activité (véhicules entretenus, chauffeurs en règle). Ne pas promettre de garanties techniques au-delà de ce qui est vérifié : préciser que la politique de sauvegarde (fréquence, lieu de conservation) sera définie avec l'organisation.",
-    "Bons réflexes");
+  // Diapositive « à faire / à éviter »
+  function dosDonts(title, icon, intro, dos, donts, hint, notes) {
+    const s = content(title, "Bonnes pratiques", icon);
+    tx(s, intro, { x: 0.6, y: 1.5, w: 12.1, h: 0.5, fontSize: 17, color: C.text2, margin: 0 });
+    [["À faire", "FaCircleCheck", HEX.green, dos], ["À éviter", "FaCircleXmark", HEX.grey, donts]].forEach((col, c) => {
+      const x = 0.6 + c * 6.15, st = c * 6 + 1;
+      panel(s, x, 2.15, 5.95, 4.0, C.background1, st, true);
+      tx(s, col[0], Object.assign({ x: x + 0.3, y: 2.3, w: 5.4, h: 0.5, fontSize: 19, bold: true, color: c ? C.accent5 : C.accent3, margin: 0 }, A(st)));
+      col[3].forEach((t, j) => { const y = 2.95 + j * 0.78;
+        s.addImage(Object.assign({ data: ic(col[1], col[2]), x: x + 0.3, y: y + 0.04, w: 0.32, h: 0.32 }, A(st + 1 + j)));
+        tx(s, t, Object.assign({ x: x + 0.8, y, w: 4.95, h: 0.72, fontSize: 15, margin: 0 }, A(st + 1 + j))); }); });
+    tx(s, [{ text: "Dans le logiciel  ", options: { bold: true, color: C.accent1 } }, { text: hint, options: { color: C.text2 } }], Object.assign({ x: 0.6, y: 6.35, w: 12.1, h: 0.4, fontSize: 13, margin: 0 }, A(13)));
+    s.addNotes(notes);
+  }
 
-  module("Confidentialité : chacun voit ce qu'il doit voir", "Sécurité et données", "FaUserSecret", "Employee › Add Employee (User Permission's)",
-    "Les données des chauffeurs, des clients, des employés et les finances sont sensibles.",
-    [["FaUserLock", "Droits par profil", "Permissions module par module : voir, ajouter, modifier, supprimer."], ["FaAddressBook", "Données personnelles", "Contacts, adresses, permis, documents : accès limité aux personnes concernées."],
-     ["FaFingerprint", "Traçabilité", "Auteur de chaque transaction et dernière connexion de chaque utilisateur."], ["FaFileExport", "Exports maîtrisés", "Exports Excel, CSV et PDF à réserver aux profils qui en ont besoin."]],
-    ["Donner à chacun le minimum de droits nécessaires", "Ne pas diffuser d'export sans besoin", "Désactiver le compte d'une personne qui part"],
-    "Insister sur le principe du moindre droit : les finances et les données personnelles ne doivent être visibles que par les profils concernés. Les profils seront définis avec la direction avant la mise en service.",
-    "Bons réflexes");
+  dosDonts("Sécurité : protéger son compte", "FaShieldHalved", "Votre compte, c'est votre signature : tout ce qui est fait avec est enregistré à votre nom.",
+    ["Choisir un mot de passe long et personnel", "Le changer dès qu'il a pu être vu", "Verrouiller son poste en quittant son bureau", "Se déconnecter sur un ordinateur partagé"],
+    ["Prêter son identifiant, même à un collègue pressé", "Noter son mot de passe sur un post-it", "Répondre à un message qui demande ses identifiants", "Se connecter depuis un poste ou un Wi-Fi inconnu"],
+    "menu Change Password pour changer son mot de passe ; l'administrateur peut désactiver un compte.",
+    "Faire réagir la salle : qui a déjà prêté son mot de passe ? Expliquer que chaque transaction affiche son auteur : si un compte est partagé, on ne sait plus qui a fait quoi. Rappeler qu'aucun service ne demandera jamais un mot de passe par téléphone, e-mail ou WhatsApp.");
 
-  module("Qualité des données : des chiffres fiables", "Sécurité et données", "FaClipboardCheck", "Tous les formulaires et toutes les listes",
-    "Des rapports justes commencent par une saisie juste.",
-    [["FaAsterisk", "Champs obligatoires", "Les informations essentielles (*) doivent être remplies pour enregistrer."], ["FaListUl", "Listes de choix", "Véhicule, chauffeur, client, catégorie sélectionnés dans des listes : moins d'erreurs de frappe."],
-     ["FaCalculator", "Calculs automatiques", "Kilométrage estimé, montant total, totaux des transactions."], ["FaFileCsv", "Import encadré", "Modèle CSV à télécharger pour importer véhicules et chauffeurs."]],
-    ["Saisir au fil de l'eau, pas en fin de mois", "Vérifier avant de valider et éviter les doublons", "Supprimer les données de test"],
-    "Rappeler que le tableau de bord et les rapports ne valent que par la qualité de la saisie. Exemple concret : une catégorie créée deux fois (comme « Trip Income ») disperse les chiffres. Nommer un référent par service pour contrôler la qualité des données.",
-    "Bons réflexes");
+  dosDonts("Confidentialité : protéger les informations", "FaUserSecret", "Contacts des clients, permis des chauffeurs, salaires, chiffres de l'entreprise : ces données sont sensibles.",
+    ["Consulter uniquement ce dont on a besoin", "Garder les exports dans les dossiers de l'entreprise", "Supprimer les exports devenus inutiles", "Demander l'avis de son responsable en cas de doute"],
+    ["Envoyer un export ou une capture d'écran sur WhatsApp", "Communiquer les coordonnées d'un client ou d'un chauffeur", "Laisser un document imprimé traîner", "Parler des chiffres de l'entreprise à l'extérieur"],
+    "les droits d'accès sont réglés par profil ; les exports Excel, CSV et PDF sont à réserver aux besoins du service.",
+    "Insister sur les exports et les captures d'écran : une fois sortie du logiciel, l'information n'est plus protégée par les droits d'accès. Donner un exemple : une liste de clients envoyée par erreur dans un groupe WhatsApp.");
+
+  dosDonts("Qualité des données : saisir juste", "FaClipboardCheck", "Le tableau de bord et les rapports ne sont fiables que si la saisie l'est.",
+    ["Saisir au fil de l'eau : un plein, un trajet, une dépense", "Vérifier véhicule, chauffeur, montant et date avant d'enregistrer", "Joindre les documents (permis, assurance, contrat)", "Mettre à jour les dates d'expiration"],
+    ["Tout saisir en fin de semaine ou de mois", "Créer un doublon (client, catégorie…) au lieu de chercher l'existant", "Laisser des données de test dans le logiciel", "Corriger en silence l'erreur d'un collègue"],
+    "utiliser la recherche avant de créer ; les champs marqués * sont obligatoires.",
+    "Exemple concret à montrer : la catégorie « Trip Income » existe deux fois dans l'application, ce qui disperse les revenus entre deux lignes. Proposer un référent qualité par service.");
+
+  // En cas de problème
+  s = content("En cas de problème : les bons réflexes", "Bonnes pratiques", "FaLifeRing");
+  tx(s, "Signaler vite vaut mieux que réparer tard. Personne ne sera blâmé pour avoir signalé.", { x: 0.6, y: 1.5, w: 12.1, h: 0.5, fontSize: 17, color: C.text2, margin: 0 });
+  [["FaKey", "Mon mot de passe a pu être vu", "Je le change tout de suite (Change Password) et je préviens l'administrateur."],
+   ["FaEnvelopeOpenText", "Message suspect demandant mes identifiants", "Je ne réponds pas, je ne clique pas, je le signale."],
+   ["FaPenToSquare", "Je constate une erreur de saisie", "Je la corrige si j'en ai le droit, sinon je la signale à mon responsable."],
+   ["FaUserMinus", "Un collègue quitte l'entreprise", "Le responsable demande la désactivation de son compte le jour même."]]
+    .forEach((d, i) => card(s, 0.6 + (i % 2) * 6.15, 2.2 + Math.floor(i / 2) * 1.85, 5.95, 1.65, d[0], d[1], d[2], i + 1));
+  panel(s, 0.6, 5.95, 12.1, 0.8, C.text2, 5, true);
+  tx(s, [{ text: "Contact sécurité et support :  ", options: { bold: true, color: C.accent2 } }, { text: "[nom et téléphone de l'administrateur]", options: { color: C.background1 } }], Object.assign({ x: 0.85, y: 5.95, w: 11.6, h: 0.8, fontSize: 16, valign: "middle", margin: 0 }, A(5)));
+  s.addNotes("Compléter le contact de l'administrateur avant la séance. Insister sur le fait que signaler une erreur ou un incident est un bon réflexe, jamais une faute.");
+
+  // Quiz
+  s = pres.addSlide({ masterName: "IMPACT", sectionTitle: "Bonnes pratiques" });
+  s.addText("Vrai ou faux ?", { placeholder: "title" });
+  tx(s, "Votez à main levée.", Object.assign({ x: 0.8, y: 1.65, w: 11.5, h: 0.5, fontSize: 18, color: C.accent2 }, A(1)));
+  ["Je peux prêter mon identifiant à un collègue pressé.", "Un export de la liste des clients peut être partagé sur WhatsApp.",
+   "J'enregistre le plein dès qu'il est fait.", "Le compte d'un collègue qui part doit être désactivé."]
+    .forEach((q, i) => { const x = 0.8 + (i % 2) * 5.95, y = 2.5 + Math.floor(i / 2) * 1.9, st = i + 2;
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, Object.assign({ x, y, w: 5.7, h: 1.6, rectRadius: 0.15, fill: { color: "28356B" }, line: { color: "4A5C9A", width: 1 } }, A(st)));
+      s.addShape(pres.shapes.OVAL, Object.assign({ x: x + 0.3, y: y + 0.45, w: 0.7, h: 0.7, fill: { color: C.background1 }, line: { color: C.background1 } }, A(st)));
+      tx(s, String(i + 1), Object.assign({ x: x + 0.3, y: y + 0.45, w: 0.7, h: 0.7, fontSize: 20, bold: true, color: C.text2, align: "center", valign: "middle", margin: 0 }, A(st)));
+      tx(s, q, Object.assign({ x: x + 1.25, y, w: 4.25, h: 1.6, fontSize: 17, color: C.background1, valign: "middle", margin: 0 }, A(st))); });
+  s.addNotes("RÉPONSES : 1) FAUX, chaque action est enregistrée au nom du titulaire du compte. 2) FAUX, les données des clients sont confidentielles et sortent alors de toute protection. 3) VRAI, la saisie au fil de l'eau garantit des chiffres justes. 4) VRAI, le jour même de son départ.");
 
   // Chiffres clés
   pres.addSection({ title: "Conclusion" });
@@ -368,7 +402,7 @@ async function build() {
   s.addShape(pres.shapes.DOWN_ARROW, Object.assign({ x: 9.5, y: 4.2, w: 0.45, h: 0.45, fill: { color: C.accent1 }, line: { color: C.accent1 } }, A(4)));
   panel(s, 6.7, 4.75, 6.05, 1.75, C.background1, 4, true);
   tx(s, [{ text: "À partir du 4ᵉ mois : 100 000 FCFA", options: { bold: true, fontSize: 20, color: C.text2, breakLine: true } }, { text: "réglés chaque mois", options: { fontSize: 15, color: C.accent5 } }], Object.assign({ x: 6.95, y: 4.85, w: 5.6, h: 1.55, valign: "middle" }, A(4)));
-  s.addNotes("DIAPOSITIVE MASQUÉE : elle ne s'affiche pas pendant le diaporama. Pour l'afficher si la direction pose la question, taper 24 puis Entrée pendant le diaporama. Ne présenter que ces montants, sans autres frais.");
+  s.addNotes("DIAPOSITIVE MASQUÉE : elle ne s'affiche pas pendant le diaporama. Pour l'afficher si la direction pose la question, taper 26 puis Entrée pendant le diaporama. Ne présenter que ces montants, sans autres frais.");
 
   await pres.writeFile({ fileName: OUT });
 }
@@ -424,7 +458,8 @@ async function animate() {
   await loadIcons([
     ...["FaTruckFast", "FaLightbulb", "FaLayerGroup", "FaBell", "FaChartLine", "FaSitemap", "FaGaugeHigh", "FaTruck", "FaUsers", "FaRoute", "FaWrench", "FaCoins",
       "FaUserTie", "FaMapLocationDot", "FaChartPie", "FaUserShield", "FaGear", "FaStar", "FaPlay", "FaComments", "FaFileInvoiceDollar", "FaUserPlus", "FaGasPump",
-      "FaReceipt", "FaArrowTrendUp", "FaArrowTrendDown", "FaBullseye", "FaPhone", "FaWrench", "FaCalendarDays", "FaShieldHalved", "FaUserSecret", "FaClipboardCheck"].map(n => [n, HEX.white]),
+      "FaReceipt", "FaArrowTrendUp", "FaArrowTrendDown", "FaBullseye", "FaPhone", "FaWrench", "FaCalendarDays", "FaShieldHalved", "FaUserSecret", "FaClipboardCheck", "FaLifeRing"].map(n => [n, HEX.white]),
+    ...["FaEnvelopeOpenText", "FaPenToSquare", "FaUserMinus"].map(n => [n, HEX.blue]), ["FaCircleCheck", HEX.green], ["FaCircleXmark", HEX.grey],
     ...["FaKey", "FaLock", "FaRoad", "FaUserLock", "FaAddressBook", "FaFingerprint", "FaFileExport", "FaAsterisk", "FaListUl", "FaCalculator", "FaFileCsv"].map(n => [n, HEX.blue]),
     ...["FaLayerGroup", "FaBell", "FaChartLine", "FaGaugeHigh", "FaTruck", "FaUsers", "FaRoute", "FaWrench", "FaCoins", "FaHashtag", "FaTruckFront", "FaCalendarDays",
       "FaIdCard", "FaCalendarXmark", "FaTag", "FaAddressCard", "FaIdBadge", "FaHandshake", "FaFileContract", "FaLocationCrosshairs", "FaClockRotateLeft", "FaDrawPolygon",
