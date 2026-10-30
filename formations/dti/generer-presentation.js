@@ -117,7 +117,7 @@ async function build() {
   let s = pres.addSlide({ masterName: "SOMBRE", sectionTitle: "Introduction" });
   hero(s, "FaTruckFast");
   s.addShape(pres.shapes.OVAL, { x: 0.8, y: 1.55, w: 0.12, h: 0.12, fill: { color: C.accent4 }, line: { color: C.accent4 } });
-  tx(s, "PRÉSENTATION DU LOGICIEL", { x: 1.0, y: 1.45, w: 6, h: 0.32, fontSize: 12, bold: true, color: C.accent2, charSpacing: 3, margin: 0, valign: "middle" });
+  tx(s, "PRISE EN MAIN DU LOGICIEL", { x: 1.0, y: 1.45, w: 6, h: 0.32, fontSize: 12, bold: true, color: C.accent2, charSpacing: 3, margin: 0, valign: "middle" });
   s.addText("Division Terrestre Internationale", { placeholder: "title" });
   tx(s, "Gestion de la flotte, des chauffeurs, des trajets et des finances", Object.assign({ x: 0.8, y: 4.05, w: 7.2, h: 0.9, fontSize: 20, color: C.accent2 }, A(2)));
   // Présentateur et date
@@ -129,22 +129,22 @@ async function build() {
   iconTile(s, "FaCalendarDays", 6.4, 5.4, 0.7, C.accent1, HEX.white, 4);
   tx(s, [{ text: "DATE", options: { fontSize: 10, bold: true, color: C.accent2, charSpacing: 2, breakLine: true } },
     { text: "Vendredi 30 octobre 2026", options: { fontSize: 17, bold: true, color: C.background1 } }], Object.assign({ x: 7.3, y: 5.3, w: 3.0, h: 1.1, margin: 0, valign: "middle" }, A(4)));
-  s.addNotes("Accueillir les participants (agents et direction). Annoncer le déroulé : présentation du logiciel (ce qu'il sait faire, ses modules, comment et pourquoi l'utiliser), puis démonstration en direct d'un petit circuit de travail, puis questions.");
+  s.addNotes("Accueillir les participants (agents et direction). Rappeler que l'entreprise utilise déjà Division Terrestre Internationale : l'objectif de la séance est de bien l'utiliser au quotidien. Déroulé : tour des modules, bonnes pratiques (sécurité, confidentialité, qualité des données), démonstration en direct d'un circuit de travail, puis questions.");
 
   // 2 — Pourquoi
-  s = content("Pourquoi ce logiciel ?", "Introduction", "FaLightbulb");
-  tx(s, "Aujourd'hui", Object.assign({ x: 0.6, y: 1.5, w: 5.6, h: 0.45, fontSize: 19, bold: true, color: C.accent5 }, A(1)));
-  [["FaShuffle", "Informations dispersées", "Cahiers, tableurs, appels : difficile de savoir où est un camion et qui le conduit."],
-   ["FaHourglassHalf", "Échéances oubliées", "Assurances, immatriculations et permis expirés découverts trop tard."],
-   ["FaCircleQuestion", "Coûts mal suivis", "Carburant, entretien et pièces difficiles à rattacher à chaque véhicule."]]
+  s = content("Pourquoi bien l'utiliser au quotidien ?", "Introduction", "FaLightbulb");
+  tx(s, "Quand la saisie est incomplète", Object.assign({ x: 0.6, y: 1.5, w: 5.6, h: 0.45, fontSize: 19, bold: true, color: C.accent5 }, A(1)));
+  [["FaShuffle", "Informations introuvables", "Restées dans un cahier ou un tableur, elles ne servent à personne d'autre."],
+   ["FaHourglassHalf", "Aucune alerte", "Une date d'expiration non saisie, c'est une assurance ou un permis qui expire sans prévenir."],
+   ["FaCircleQuestion", "Chiffres faux", "Un plein ou une dépense oubliés faussent le tableau de bord et les rapports."]]
     .forEach((d, i) => card(s, 0.6, 2.05 + i * 1.6, 5.6, 1.4, d[0], d[1], d[2], 2 + i, HEX.grey));
   s.addShape(pres.shapes.RIGHT_ARROW, Object.assign({ x: 6.42, y: 3.85, w: 0.55, h: 0.55, fill: { color: C.accent1 }, line: { color: C.accent1 } }, A(5)));
-  tx(s, "Avec Division Terrestre Internationale", Object.assign({ x: 7.2, y: 1.5, w: 5.6, h: 0.45, fontSize: 19, bold: true, color: C.accent1 }, A(6)));
-  [["FaLayerGroup", "Tout au même endroit", "Véhicules, chauffeurs, trajets, clients, carburant, entretien et finances."],
-   ["FaBell", "Alertes et rappels", "Documents expirés signalés, rappels d'entretien, tableau de bord du jour."],
-   ["FaChartLine", "Décisions chiffrées", "Revenus, dépenses et rapports par véhicule, chauffeur ou itinéraire."]]
+  tx(s, "Quand chacun l'utilise bien", Object.assign({ x: 7.2, y: 1.5, w: 5.6, h: 0.45, fontSize: 19, bold: true, color: C.accent1 }, A(6)));
+  [["FaLayerGroup", "Tout est retrouvé en quelques secondes", "Véhicules, chauffeurs, trajets, clients, carburant, entretien et finances."],
+   ["FaBell", "Les alertes fonctionnent", "Documents expirés signalés, rappels d'entretien au bon moment."],
+   ["FaChartLine", "Des chiffres fiables", "Tableau de bord et rapports justes pour décider par véhicule, chauffeur ou itinéraire."]]
     .forEach((d, i) => card(s, 7.2, 2.05 + i * 1.6, 5.55, 1.4, d[0], d[1], d[2], 7 + i));
-  s.addNotes("Partir du quotidien des participants : demander comment ils savent aujourd'hui quel camion est disponible, quand expire une assurance, ou combien a coûté un véhicule le mois dernier. Le logiciel répond à ces trois besoins : centraliser, alerter, chiffrer.");
+  s.addNotes("Le logiciel est déjà en place : sa valeur dépend de la façon dont chacun l'utilise. Demander aux participants : aujourd'hui, toutes les informations sont-elles bien saisies ? Montrer qu'une saisie incomplète fait perdre les alertes et fausse les chiffres. Annoncer la suite : le tour des modules, puis les bonnes pratiques et une démonstration.");
 
   // 3 — Modules
   s = content("18 modules, 6 grandes familles", "Introduction", "FaSitemap");
@@ -318,10 +318,8 @@ async function build() {
    ["FaEnvelopeOpenText", "Message suspect demandant mes identifiants", "Je ne réponds pas, je ne clique pas, je le signale."],
    ["FaPenToSquare", "Je constate une erreur de saisie", "Je la corrige si j'en ai le droit, sinon je la signale à mon responsable."],
    ["FaUserMinus", "Un collègue quitte l'entreprise", "Le responsable demande la désactivation de son compte le jour même."]]
-    .forEach((d, i) => card(s, 0.6 + (i % 2) * 6.15, 2.2 + Math.floor(i / 2) * 1.85, 5.95, 1.65, d[0], d[1], d[2], i + 1));
-  panel(s, 0.6, 5.95, 12.1, 0.8, C.text2, 5, true);
-  tx(s, [{ text: "Contact sécurité et support :  ", options: { bold: true, color: C.accent2 } }, { text: "[nom et téléphone de l'administrateur]", options: { color: C.background1 } }], Object.assign({ x: 0.85, y: 5.95, w: 11.6, h: 0.8, fontSize: 16, valign: "middle", margin: 0 }, A(5)));
-  s.addNotes("Compléter le contact de l'administrateur avant la séance. Insister sur le fait que signaler une erreur ou un incident est un bon réflexe, jamais une faute.");
+    .forEach((d, i) => card(s, 0.6 + (i % 2) * 6.15, 2.25 + Math.floor(i / 2) * 2.25, 5.95, 2.0, d[0], d[1], d[2], i + 1));
+  s.addNotes("Préciser à qui s'adresser dans l'entreprise (administrateur ou responsable). Insister sur le fait que signaler une erreur ou un incident est un bon réflexe, jamais une faute.");
 
   // Quiz
   s = pres.addSlide({ masterName: "IMPACT", sectionTitle: "Bonnes pratiques" });
@@ -349,9 +347,9 @@ async function build() {
   s.addNotes("Diapositive de respiration avant la synthèse : laisser les chiffres apparaître un à un et les commenter brièvement.");
 
   // Ce que ça change
-  s = content("Ce que ça change pour chacun", "Conclusion", "FaStar");
-  [["FaUserTie", "Pour la direction", C.text2, ["Vision en temps réel de l'activité", "Rentabilité par véhicule, chauffeur et itinéraire", "Coûts de carburant et d'entretien maîtrisés", "Décisions appuyées sur des rapports"]],
-   ["FaUsers", "Pour les agents", C.accent1, ["Une seule application au lieu de plusieurs outils", "Informations retrouvées en quelques secondes", "Rappels automatiques des échéances", "Moins de saisie grâce aux imports et exports"]]]
+  s = content("Qui fait quoi au quotidien ?", "Conclusion", "FaPeopleArrows");
+  [["FaUserTie", "La direction", C.text2, ["Consulte le tableau de bord chaque jour", "Suit les rapports (Top véhicules, itinéraires, dépenses)", "Valide les droits d'accès de chaque profil", "Veille à la qualité des données"]],
+   ["FaUsers", "Les agents", C.accent1, ["Vérifient le calendrier avant de réserver", "Saisissent trajets, pleins et dépenses au fil de l'eau", "Tiennent à jour documents et dates d'expiration", "Signalent les erreurs et les incidents"]]]
     .forEach((d, i) => { const x = 0.6 + i * 6.2, st = i * 5 + 1;
       panel(s, x, 1.6, 5.9, 5.1, C.background1, st, true);
       iconTile(s, d[0], x + 0.3, 1.85, 0.85, d[2], HEX.white, st);
@@ -359,7 +357,7 @@ async function build() {
       d[3].forEach((t, j) => { const y = 3.0 + j * 0.88;
         s.addImage(Object.assign({ data: ic("FaCircleCheck", HEX.blue), x: x + 0.35, y: y + 0.05, w: 0.32, h: 0.32 }, A(st + 1 + j)));
         tx(s, t, Object.assign({ x: x + 0.85, y, w: 4.85, h: 0.8, fontSize: 17, margin: 0 }, A(st + 1 + j))); }); });
-  s.addNotes("Synthèse orientée bénéfices, avant la démonstration. Laisser la direction et les agents réagir : quel bénéfice compte le plus pour eux ?");
+  s.addNotes("Répartir clairement les rôles avant la démonstration. Demander à chacun de citer l'action qu'il fera dès demain dans le logiciel.");
 
   // 16 — Démo : les étapes posées sur une route
   s = content("Démonstration : un circuit de travail", "Conclusion", "FaPlay");
@@ -458,7 +456,7 @@ async function animate() {
   await loadIcons([
     ...["FaTruckFast", "FaLightbulb", "FaLayerGroup", "FaBell", "FaChartLine", "FaSitemap", "FaGaugeHigh", "FaTruck", "FaUsers", "FaRoute", "FaWrench", "FaCoins",
       "FaUserTie", "FaMapLocationDot", "FaChartPie", "FaUserShield", "FaGear", "FaStar", "FaPlay", "FaComments", "FaFileInvoiceDollar", "FaUserPlus", "FaGasPump",
-      "FaReceipt", "FaArrowTrendUp", "FaArrowTrendDown", "FaBullseye", "FaPhone", "FaWrench", "FaCalendarDays", "FaShieldHalved", "FaUserSecret", "FaClipboardCheck", "FaLifeRing"].map(n => [n, HEX.white]),
+      "FaReceipt", "FaArrowTrendUp", "FaArrowTrendDown", "FaBullseye", "FaPhone", "FaWrench", "FaCalendarDays", "FaShieldHalved", "FaUserSecret", "FaClipboardCheck", "FaLifeRing", "FaPeopleArrows"].map(n => [n, HEX.white]),
     ...["FaEnvelopeOpenText", "FaPenToSquare", "FaUserMinus"].map(n => [n, HEX.blue]), ["FaCircleCheck", HEX.green], ["FaCircleXmark", HEX.grey],
     ...["FaKey", "FaLock", "FaRoad", "FaUserLock", "FaAddressBook", "FaFingerprint", "FaFileExport", "FaAsterisk", "FaListUl", "FaCalculator", "FaFileCsv"].map(n => [n, HEX.blue]),
     ...["FaLayerGroup", "FaBell", "FaChartLine", "FaGaugeHigh", "FaTruck", "FaUsers", "FaRoute", "FaWrench", "FaCoins", "FaHashtag", "FaTruckFront", "FaCalendarDays",
